@@ -1,0 +1,38 @@
+
+<mat-form-field>
+  <input matInput placeholder="What needs to be done?" value="title" [(ngModel)]="title">
+</mat-form-field>
+
+<button
+  mat-mini-fab
+  (click)="addTodo(title)"
+  [disabled]="!title"
+  *ngIf="!editing">
+  <i class="material-icons">add</i>
+</button>
+
+<button
+  mat-mini-fab
+  (click)="updateTodo(title)"
+  *ngIf="editing">
+    <i class="material-icons">save</i>
+</button>
+<button
+  mat-mini-fab
+  (click)="cancelEdit()"
+  *ngIf="editing">
+  <i class="material-icons">cancel</i>
+</button>
+
+
+  <mat-card *ngFor="let todo of todos$ | async; let i = index;">
+
+        <button mat-mini-fab (click)="toggleDone(todo, i)" *ngIf="!todo.done"><i class="material-icons">circle</i></button>
+        <button mat-mini-fab (click)="toggleDone(todo, i)" *ngIf="todo.done"><i class="material-icons">check</i></button>
+
+      <span [class.done]="todo.done">Text: {{ todo.title }}</span>
+
+      <button mat-mini-fab (click)="editTodo(todo, i)"><i class="material-icons">edit</i></button>
+      <button mat-mini-fab (click)="deleteTodo(i)"><i class="material-icons">delete</i></button>
+
+  </mat-card>
